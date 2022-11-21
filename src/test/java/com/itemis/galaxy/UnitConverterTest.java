@@ -1,5 +1,9 @@
 package com.itemis.galaxy;
 
-public class UnitConverterTest {
+/**
+ * This class tests the {@link UnitConverter} class.
+ */
+public final class UnitConverterTest {
+
 
 }
