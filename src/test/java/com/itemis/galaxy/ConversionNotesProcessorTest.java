@@ -29,11 +29,11 @@ public final class ConversionNotesProcessorTest {
 		ConversionNotesProcessor notesProcessor = new ConversionNotesProcessor();
 		List<String> output = notesProcessor.processNotes(input);
 		
-		Assert.assertEquals(output.size(), 5);
-		Assert.assertEquals(output.get(0), "pish tegj glob glob is 42");
-		Assert.assertEquals(output.get(1), "glob prok Silver is 68 Credits");
-		Assert.assertEquals(output.get(2), "glob prok Gold is 57800 Credits");
-		Assert.assertEquals(output.get(3), "glob prok Iron is 782 Credits");
-		Assert.assertEquals(output.get(4), "I have no idea what you are talking about");
+		Assert.assertEquals(5, output.size());
+		Assert.assertEquals("pish tegj glob glob is 42", output.get(0));
+		Assert.assertEquals("glob prok Silver is 68 Credits", output.get(1));
+		Assert.assertEquals("glob prok Gold is 57800 Credits", output.get(2));
+		Assert.assertEquals("glob prok Iron is 782 Credits", output.get(3));
+		Assert.assertEquals("I have no idea what you are talking about", output.get(4));
 	}
 }
