@@ -3,9 +3,11 @@ package com.itemis.galaxy;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
+import java.util.stream.Collectors;
 
 /**
  * This class can is used to convert galactic units.
@@ -15,6 +17,8 @@ public final class UnitConverter {
 	
 	private Map<String, RomanSymbol> symbolValues = new HashMap<>();
 	private Map<String, Double> metalPrices = new HashMap<>();
+	
+	private final RomanNumberConverter romanConverter = new RomanNumberConverter();
 
 	/**
 	 * Set the corresponding roman symbol value for a galactic symbol.
@@ -89,7 +93,16 @@ public final class UnitConverter {
 	 * @return amount or empty if the amount can not be calculated
 	 */
 	public OptionalInt calculateNumber(List<String> galacticSymbols) {
-		//TODO
-		return OptionalInt.empty();
+		List<RomanSymbol> romanSymbols = galacticSymbols.stream()
+														.map(symbolValues::get)
+														.filter(Objects::nonNull)
+														.collect(Collectors.toList());
+		
+		boolean hasUnknownSymbols = romanSymbols.size() < galacticSymbols.size();
+		if(hasUnknownSymbols) {
+			return OptionalInt.empty();
+		}
+		
+		return romanConverter.calculateNumber(romanSymbols);
 	}
 }
