@@ -1,2 +1,8 @@
-# galaxy-unit-converter
- This application converts galactic numbers and units.
+# Galaxy Unit Converter
+
+## Assumptions
+
+
+## Build and Run
+- mvn install
+- java -cp 
