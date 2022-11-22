@@ -1,6 +1,8 @@
 package com.itemis.galaxy;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
@@ -10,6 +12,9 @@ import java.util.OptionalInt;
  * It processes a set of conversion notes to generate a textual output of the converted units.
  */
 public final class UnitConverter {
+	
+	private Map<String, RomanSymbol> symbolValues = new HashMap<>();
+	private Map<String, Double> metalPrices = new HashMap<>();
 
 	/**
 	 * Set the corresponding roman symbol value for a galactic symbol.
@@ -17,7 +22,7 @@ public final class UnitConverter {
 	 * @param romanSymbol corresponding roman symbol of the galactic symbol
 	 */
 	public void setSymbolValue(String galacticSymbol, RomanSymbol romanSymbol) {
-		//TODO
+		symbolValues.put(galacticSymbol, romanSymbol);
 	}
 	
 	/**
@@ -25,7 +30,7 @@ public final class UnitConverter {
 	 * @param galacticSymbol galactic symbol to remove
 	 */
 	public void removeSymbolValue(String galacticSymbol) {
-		//TODO
+		symbolValues.remove(galacticSymbol);
 	}
 	
 	/**
@@ -34,8 +39,7 @@ public final class UnitConverter {
 	 * @return roman symbol or empty if the galactic symbol is unknown
 	 */
 	public Optional<RomanSymbol> getSymbolValue(String galacticSymbol) {
-		//TODO
-		return Optional.empty();
+		return Optional.ofNullable(symbolValues.get(galacticSymbol));
 	}
 	
 	/**
@@ -44,7 +48,7 @@ public final class UnitConverter {
 	 * @param price price in credits
 	 */
 	public void setMetalPrice(String metal, double price) {
-		//TODO
+		metalPrices.put(metal, price);
 	}
 	
 	/**
@@ -53,8 +57,11 @@ public final class UnitConverter {
 	 * @return price in credits or empty if the metal if unknown
 	 */
 	public OptionalDouble getMetalPrice(String metal) {
-		//TODO
-		return OptionalDouble.empty();
+		if(metalPrices.containsKey(metal)) {
+			return OptionalDouble.of(metalPrices.get(metal));
+		} else {
+			return OptionalDouble.empty();
+		}
 	}
 	
 	/**
@@ -62,8 +69,7 @@ public final class UnitConverter {
 	 * @param metal metal
 	 */
 	public void removeMetalPrice(String metal) {
-		//TODO
-		
+		metalPrices.remove(metal);
 	}
 	
 	/**
