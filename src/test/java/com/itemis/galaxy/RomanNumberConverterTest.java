@@ -185,6 +185,18 @@ public final class RomanNumberConverterTest {
 		
 		input = List.of(RomanSymbol.M, RomanSymbol.M, RomanSymbol.M, RomanSymbol.M);
 		Assert.assertFalse(converter.calculateNumber(input).isPresent());
+		
+		input = List.of(RomanSymbol.I, RomanSymbol.M);
+		Assert.assertFalse(converter.calculateNumber(input).isPresent());
+		
+		input = List.of(RomanSymbol.I, RomanSymbol.L);
+		Assert.assertFalse(converter.calculateNumber(input).isPresent());
+		
+		input = List.of(RomanSymbol.X, RomanSymbol.M);
+		Assert.assertFalse(converter.calculateNumber(input).isPresent());
+		
+		input = List.of(RomanSymbol.X, RomanSymbol.D);
+		Assert.assertFalse(converter.calculateNumber(input).isPresent());
 
 		input = List.of(RomanSymbol.X, RomanSymbol.I, RomanSymbol.V, RomanSymbol.I);
 		Assert.assertFalse(converter.calculateNumber(input).isPresent());
