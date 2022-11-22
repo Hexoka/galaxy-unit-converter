@@ -18,7 +18,7 @@ public final class RomanNumberConverter {
 		case 0:
 			return OptionalInt.of(0);
 		case 1:
-			return OptionalInt.of(romanSymbols.size());
+			return OptionalInt.of(romanSymbols.get(0).getValue());
 		}
 		return OptionalInt.empty();
 	}
