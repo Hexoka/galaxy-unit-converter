@@ -14,6 +14,12 @@ public final class RomanNumberConverter {
 	 * @return calculated number or empty if the number can not be calculated
 	 */
 	public OptionalInt calculateNumber(List<RomanSymbol> romanSymbols) {
+		switch(romanSymbols.size()) {
+		case 0:
+			return OptionalInt.of(0);
+		case 1:
+			return OptionalInt.of(romanSymbols.size());
+		}
 		return OptionalInt.empty();
 	}
 }

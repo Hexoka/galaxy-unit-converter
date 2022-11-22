@@ -9,6 +9,20 @@ import org.junit.Test;
  * This class tests the {@link RomanNumberConverter} class.
  */
 public final class RomanNumberConverterTest {
+	
+	/**
+	 * Tests the method {@link RomanNumberConverter#calculateNumber(List)}
+	 * Uses an empty list.
+	 */
+	@Test
+	public void testCalculateNumber() {
+		RomanNumberConverter converter = new RomanNumberConverter();
+		
+		List<RomanSymbol> input = List.of();
+		Assert.assertTrue(converter.calculateNumber(input).isPresent());
+		Assert.assertEquals(0, converter.calculateNumber(input).getAsInt());
+		
+	}
 
 	/**
 	 * Tests the method {@link RomanNumberConverter#calculateNumber(List)}
