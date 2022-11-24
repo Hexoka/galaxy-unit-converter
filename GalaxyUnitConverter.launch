@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/galaxy-unit-converter/src/main/java/com/itemis/galaxy/Main.java"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="1"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_SHOW_CODEDETAILS_IN_EXCEPTION_MESSAGES" value="true"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.itemis.galaxy.Main"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="galaxy-unit-converter"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="&quot;glob is I&quot;&#13;&#10;&quot;prok is V&quot;&#13;&#10;&quot;pish is X&quot;&#13;&#10;&quot;tegj is L&quot;&#13;&#10;&quot;glob glob Silver is 34 Credits&quot;&#13;&#10;&quot;glob prok Gold is 57800 Credits&quot;&#13;&#10;&quot;pish pish Iron is 3910 Credits&quot;&#13;&#10;&quot;how much is pish tegj glob glob ?&quot;&#13;&#10;&quot;how many Credits is glob prok Silver ?&quot;&#13;&#10;&quot;how many Credits is glob prok Gold ?&quot;&#13;&#10;&quot;how many Credits is glob prok Iron ?&quot;&#13;&#10;&quot;how much wood could a woodchuck chuck if a woodchuck could chuck wood ?&quot;"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="galaxy-unit-converter"/>
+    <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
+</launchConfiguration>
