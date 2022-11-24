@@ -310,4 +310,16 @@ public final class RomanNumberConverterTest {
 		List<RomanSymbol> input = List.of(RomanSymbol.X, RomanSymbol.I, RomanSymbol.V, RomanSymbol.I);
 		Assert.assertFalse(converter.calculateNumber(input).isPresent());
 	}
+
+	@Test
+	public void testCalculateNumber39() {
+		List<RomanSymbol> input = List.of(RomanSymbol.V, RomanSymbol.M);
+		Assert.assertFalse(converter.calculateNumber(input).isPresent());
+	}
+
+	@Test
+	public void testCalculateNumber40() {
+		List<RomanSymbol> input = List.of(RomanSymbol.V, RomanSymbol.D);
+		Assert.assertFalse(converter.calculateNumber(input).isPresent());
+	}
 }
