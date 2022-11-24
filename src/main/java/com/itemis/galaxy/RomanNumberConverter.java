@@ -18,6 +18,8 @@ public final class RomanNumberConverter {
 			return OptionalInt.of(0);
 		}
 		int totalValue = 0;
+		
+		//Split the roman numerals into the digits of the result and calculate them separately and sum up the results
 		int lastSplitIndex = 0;
 		int maxValue = 1000;
 		int minValue = 100;
@@ -47,9 +49,16 @@ public final class RomanNumberConverter {
 		return OptionalInt.of(totalValue);
 	}
 	
+	/**
+	 * Calculate the value for one digit of the roman numeral
+	 * @param romanSymbols roman symbols of the digit
+	 * @return value of the digit, if the input was not valid
+	 */
 	private OptionalInt calculateDigitValue(List<RomanSymbol> romanSymbols) {
 		if(romanSymbols.size() == 2) {
 			if(romanSymbols.get(1).getValue() > romanSymbols.get(0).getValue()) {
+				//If there are exactly two symbols and the second is greater than the first
+				//we calculate a subtraction value
 				return calculateSubtraction(romanSymbols.get(0), romanSymbols.get(1));
 			}
 		}
@@ -59,6 +68,7 @@ public final class RomanNumberConverter {
 		int repeats = 0;
 		for(RomanSymbol symbol : romanSymbols) {
 			if(symbol.getValue() > previousSymbol.getValue()) {
+				//The value of the symbol must be ordered from largest to smallest 
 				return OptionalInt.empty();
 			} else if(symbol == previousSymbol) {
 				repeats++;

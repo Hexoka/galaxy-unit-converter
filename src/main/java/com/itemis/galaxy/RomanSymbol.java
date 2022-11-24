@@ -1,7 +1,7 @@
 package com.itemis.galaxy;
 
 /**
- * This enum represents the symbol used for roman numerals.
+ * This enum represents the symbols used for roman numerals.
  */
 public enum RomanSymbol {
 
