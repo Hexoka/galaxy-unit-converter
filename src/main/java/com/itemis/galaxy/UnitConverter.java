@@ -83,8 +83,12 @@ public final class UnitConverter {
 	 * @return price or empty if the price can not be calculated
 	 */
 	public OptionalDouble calculatePrice(String metal, List<String> galacticSymbols) {
-		//TODO
-		return OptionalDouble.empty();
+		OptionalInt amount = calculateNumber(galacticSymbols);
+		OptionalDouble metalPrice = getMetalPrice(metal);
+		if(amount.isEmpty() || metalPrice.isEmpty()) {
+			return OptionalDouble.empty();
+		}
+		return OptionalDouble.of(amount.getAsInt() * metalPrice.getAsDouble());
 	}
 	
 	/**
