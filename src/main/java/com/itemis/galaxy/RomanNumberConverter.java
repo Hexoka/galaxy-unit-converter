@@ -1,8 +1,6 @@
 package com.itemis.galaxy;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.OptionalInt;
 
 /**
@@ -12,7 +10,7 @@ public final class RomanNumberConverter {
 
 	/**
 	 * Calculate the number for a roman numeral.
-	 * @param romanSymbols roman numeral
+	 * @param romanSymbols roman numeral (not null)
 	 * @return calculated number or empty if the number can not be calculated because of an invalid input
 	 */
 	public OptionalInt calculateNumber(List<RomanSymbol> romanSymbols) {
@@ -47,112 +45,40 @@ public final class RomanNumberConverter {
 		totalValue += digitValue.getAsInt();
 		
 		return OptionalInt.of(totalValue);
-		
-//		boolean valid = checkValidity(romanSymbols);
-//		if(!valid) {
-//			return OptionalInt.empty();
-//		}
-//		return calculateNumberForValid(romanSymbols);
 	}
 	
 	private OptionalInt calculateDigitValue(List<RomanSymbol> romanSymbols) {
-		System.out.print("Digit: ");
-		romanSymbols.stream().map(Enum::name).forEach(System.out::print);
-		System.out.println();
-		
 		if(romanSymbols.size() == 2) {
 			if(romanSymbols.get(1).getValue() > romanSymbols.get(0).getValue()) {
-				System.out.println("Subtraction: "  +romanSymbols.get(0).name() + romanSymbols.get(1).name());
 				return calculateSubtraction(romanSymbols.get(0), romanSymbols.get(1));
 			}
 		}
 		
 		int value = 0;
-		RomanSymbol lastSymbol = RomanSymbol.M;
+		RomanSymbol previousSymbol = RomanSymbol.M;
+		int repeats = 0;
 		for(RomanSymbol symbol : romanSymbols) {
-			if(symbol.getValue() > lastSymbol.getValue()) {
+			if(symbol.getValue() > previousSymbol.getValue()) {
 				return OptionalInt.empty();
+			} else if(symbol == previousSymbol) {
+				repeats++;
+				if(repeats > allowedRepeats(symbol)) {
+					return OptionalInt.empty();
+				}
+			} else {
+				repeats = 1;
 			}
 			value += symbol.getValue();
-			lastSymbol = symbol;
+			previousSymbol = symbol;
 		}
 		return OptionalInt.of(value);
 	}
 
 	/**
-	 * Calculate the number for a roman numeral.
-	 * @param romanSymbols roman numeral (must be a valid numeral)
-	 * @return calculated number or empty if the number can not be calculated because of an invalid input
+	 * Returns the number of allowed repetitions of the given symbol in a roman numeral. 
+	 * @param symbol symbol (not null)
+	 * @return the number of allowed repetitions
 	 */
-	private OptionalInt calculateNumberForValid(List<RomanSymbol> romanSymbols) {
-		romanSymbols = new ArrayList<>(romanSymbols);
-		switch(romanSymbols.size()) {
-		case 0:
-			return OptionalInt.of(0);
-		case 1:
-			return OptionalInt.of(romanSymbols.get(0).getValue());
-		}
-		
-		RomanSymbol first = romanSymbols.get(0);
-		RomanSymbol second = romanSymbols.get(1);
-		if(first.getValue() >= second.getValue()) {
-			//Split the calculations after the first symbol
-			romanSymbols.remove(0);
-			OptionalInt valueFirst = calculateNumberForValid(List.of(first));
-			OptionalInt valueWithoutFirst = calculateNumberForValid(romanSymbols);
-			if(valueFirst.isPresent() && valueWithoutFirst.isPresent()) {
-				int value = valueWithoutFirst.getAsInt() + valueFirst.getAsInt();
-				return OptionalInt.of(value);
-			} else {
-				return OptionalInt.empty();
-			}
-		} else {
-			//Split the calculations after the second symbol
-			romanSymbols.remove(0);
-			romanSymbols.remove(0);
-			OptionalInt valueFirstSecond = calculateSubtraction(first, second);
-			OptionalInt valueWithoutFirst = calculateNumberForValid(romanSymbols);
-			if(valueFirstSecond.isPresent() && valueWithoutFirst.isPresent()) {
-				int value = valueWithoutFirst.getAsInt() + valueFirstSecond.getAsInt();
-				return OptionalInt.of(value);
-			} else {
-				return OptionalInt.empty();
-			}
-		}
-	}
-	
-	
-
-	private boolean checkValidity(List<RomanSymbol> romanSymbols) {
-		//Check for null values
-		boolean hasNullValues = romanSymbols.stream()
-											.filter(Objects::isNull)
-											.findAny()
-											.isPresent();
-		if(hasNullValues) {
-			return false;
-		}
-		
-		//Check disallowed repeats of same symbol
-		int count = 0;
-		RomanSymbol lastSymbol = null;
-		for(RomanSymbol symbol : romanSymbols) {
-			if(symbol == lastSymbol) {
-				count++;
-			} else {
-				count = 1;
-				lastSymbol = symbol;
-			}
-			if(count > allowedRepeats(lastSymbol)) {
-				return false;
-			}
-		}
-		
-		return true;
-	}
-
-
-
 	private int allowedRepeats(RomanSymbol symbol) {
 		switch(symbol) {
 		case I:
@@ -163,23 +89,36 @@ public final class RomanNumberConverter {
 		case D:
 		case L:
 		case V:
-		default:
 			return 1;
-			
+		default:
+			throw new IllegalArgumentException("Unknown symbol: " + symbol.name());
 		}
 	}
 
-	private OptionalInt calculateSubtraction(RomanSymbol smaller, RomanSymbol greater) {
-		if(smaller == RomanSymbol.I && greater != RomanSymbol.V && greater != RomanSymbol.X) {
+	/**
+	 * Calculates the subtraction of two roman symbols if the combination is valid e.g.:
+	 * <br>IV = 4
+	 * <br>MC = 900
+	 * <br>XL = 40
+	 * @param first first roman symbol (not null)
+	 * @param second second roman symbol (not null)
+	 * @return the subtracted value of the two symbols or empty if combination is invalid
+	 */
+	private OptionalInt calculateSubtraction(RomanSymbol first, RomanSymbol second) {
+		if(first != RomanSymbol.I && first != RomanSymbol.X && first != RomanSymbol.C) {
 			return OptionalInt.empty();
 		}
-		if(smaller == RomanSymbol.X && greater != RomanSymbol.L && greater != RomanSymbol.C) {
+		
+		if(first == RomanSymbol.I && second != RomanSymbol.V && second != RomanSymbol.X) {
 			return OptionalInt.empty();
 		}
-		if(smaller == RomanSymbol.C && greater != RomanSymbol.D && greater != RomanSymbol.M) {
+		if(first == RomanSymbol.X && second != RomanSymbol.L && second != RomanSymbol.C) {
+			return OptionalInt.empty();
+		}
+		if(first == RomanSymbol.C && second != RomanSymbol.D && second != RomanSymbol.M) {
 			return OptionalInt.empty();
 		}
 
-		return OptionalInt.of(greater.getValue() - smaller.getValue());
+		return OptionalInt.of(second.getValue() - first.getValue());
 	}
 }
